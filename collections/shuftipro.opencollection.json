@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Shufti Pro Verification API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{clientId}}",
+      "password": "{{secretKey}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Verification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a verification request.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.shuftipro.com/",
+            "body": {
+              "type": "json",
+              "data": "{\"reference\": \"<string>\",\"callback_url\": \"<string>\",\"email\": \"<string>\",\"country\": \"US\",\"verification_mode\": \"any\",\"document\": {\"proof\": \"\",\"supported_types\": [\"id_card\", \"passport\", \"driving_license\"]},\"face\": {\"proof\": \"\"},\"address\": {\"proof\": \"\",\"supported_types\": [\"id_card\", \"utility_bill\"]},\"consent\": {\"proof\": \"\",\"text\": [\"I am verifying\"],\"supported_types\": [\"handwritten\"]},\"background_checks\": {\"name\": {\"first_name\": \"<string>\", \"last_name\": \"<string>\"},\"dob\": \"1990-01-01\"},\"kyb\": {\"company_name\": \"<string>\",\"company_jurisdiction_code\": \"us_de\"}}"
+            }
+          },
+          "docs": "Create a verification request."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get verification status and proofs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.shuftipro.com/status",
+            "body": {
+              "type": "json",
+              "data": "{\"reference\": \"<string>\"}"
+            }
+          },
+          "docs": "Get verification status and proofs."
+        },
+        {
+          "info": {
+            "name": "Delete verification data.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.shuftipro.com/delete",
+            "body": {
+              "type": "json",
+              "data": "{\"reference\": \"<string>\"}"
+            }
+          },
+          "docs": "Delete verification data."
+        }
+      ]
+    }
+  ]
+}

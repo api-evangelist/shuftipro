@@ -1,0 +1,83 @@
+aid: shuftipro
+name: Shufti Pro
+review:
+  question: Does Shufti Pro expose a documented public WebSocket API?
+  answer: false
+  date: '2026-06-25'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was created. Shufti Pro's asynchronous delivery is
+    implemented as outbound HTTP webhooks (server-to-server callbacks POSTed
+    to a client-registered callback_url), not a WebSocket or SSE streaming
+    surface. The webhook contract is captured in apis.yml as the Shufti Pro
+    Webhooks API and documented narratively rather than as an AsyncAPI 2.6
+    channel.
+findings:
+  summary: |
+    Shufti Pro does not publish a documented public WebSocket API. The
+    verification platform exposes REST (HTTPS) endpoints under
+    https://api.shuftipro.com. Verification requests are submitted by POST,
+    and results are retrieved either synchronously, by polling POST /status,
+    or asynchronously via outbound webhook callbacks to a client-registered
+    callback_url. No realtime, bidirectional WebSocket (ws:// or wss://)
+    endpoint is documented for verification, status, or any other product.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.shuftipro.com
+      documented: true
+    - protocol: Webhook
+      scheme: https
+      note: >-
+        Outbound server-to-server callbacks POSTed to a client-registered
+        callback_url with a SHA256 response signature. Not WebSocket.
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: >-
+        No WebSocket endpoint is documented in Shufti Pro's developer docs
+        for verification, status, deletion, or callbacks as of the review date.
+  authentication:
+    - method: HTTP Basic Auth
+      note: Client ID as username, Secret Key as password.
+    - method: Bearer Access Token
+      note: Short-lived token valid for 10 minutes and single use.
+  endpointsConfirmedRest:
+    - POST https://api.shuftipro.com/
+    - POST https://api.shuftipro.com/status
+    - POST https://api.shuftipro.com/delete
+  events:
+    - request.received
+    - request.pending
+    - request.invalid
+    - request.timeout
+    - request.unauthorized
+    - request.deleted
+    - verification.accepted
+    - verification.declined
+    - verification.cancelled
+    - verification.status.changed
+sources:
+  - url: https://developers.shuftipro.com/
+    type: Documentation
+    note: Developer portal lists REST base URL https://api.shuftipro.com; no WebSocket mentioned.
+  - url: https://developers.shuftipro.com/docs/verification_endpoints/requests/
+    type: APIReference
+    note: Verification requests are POSTed to the base URL with JSON service objects.
+  - url: https://developers.shuftipro.com/docs/verification_endpoints/responses/
+    type: Documentation
+    note: Responses delivered synchronously or via callback_url webhooks; no WebSocket.
+  - url: https://shuftipro.com/help-center/response-events/
+    type: Documentation
+    note: Enumerates verification response events delivered over REST/webhook.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Asynchronous delivery is via
+    outbound HTTP webhook callbacks, which are represented as the Shufti Pro
+    Webhooks API in apis.yml. No AsyncAPI document was authored because the
+    callback contract is a request/response webhook rather than a streaming
+    channel.

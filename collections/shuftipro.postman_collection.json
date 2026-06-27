@@ -1,0 +1,172 @@
+{
+  "item": [
+    {
+      "id": "84e1cf94-b1c7-49ec-97cb-1acaced92e96",
+      "name": "Verification",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c1b4149b-49fd-4517-a904-26ee5746e6dd",
+          "name": "Create a verification request.",
+          "request": {
+            "name": "Create a verification request.",
+            "description": {},
+            "url": {
+              "path": [],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reference\": \"<string>\",\n  \"callback_url\": \"<string>\",\n  \"email\": \"<string>\",\n  \"country\": \"US\",\n  \"verification_mode\": \"any\",\n  \"document\": {\n    \"proof\": \"\",\n    \"supported_types\": [\"id_card\", \"passport\", \"driving_license\"]\n  },\n  \"face\": {\n    \"proof\": \"\"\n  },\n  \"address\": {\n    \"proof\": \"\",\n    \"supported_types\": [\"id_card\", \"utility_bill\"]\n  },\n  \"consent\": {\n    \"proof\": \"\",\n    \"text\": [\"I am verifying\"],\n    \"supported_types\": [\"handwritten\"]\n  },\n  \"background_checks\": {\n    \"name\": {\"first_name\": \"<string>\", \"last_name\": \"<string>\"},\n    \"dob\": \"1990-01-01\"\n  },\n  \"kyb\": {\n    \"company_name\": \"<string>\",\n    \"company_jurisdiction_code\": \"us_de\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "id": "d3c37f60-d40c-4f00-81e2-7bf51912b601",
+      "name": "Status",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2d6b4c53-69a4-45b3-9b88-9b0b01ac9b9d",
+          "name": "Get verification status and proofs.",
+          "request": {
+            "name": "Get verification status and proofs.",
+            "description": {},
+            "url": {
+              "path": [
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reference\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "a35725ac-9ea5-418b-aca3-13eaf1bd8802",
+          "name": "Delete verification data.",
+          "request": {
+            "name": "Delete verification data.",
+            "description": {},
+            "url": {
+              "path": [
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reference\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.shuftipro.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{clientId}}"
+      },
+      {
+        "key": "password",
+        "value": "{{secretKey}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8ede5d5f-4417-459c-98c0-6b4b6d969fd0",
+    "name": "Shufti Pro Verification API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Specification of the Shufti Pro identity-verification API. POST verification requests to the base URL with service objects, poll /status, and delete via /delete.\n\nContact Support:\n Name: Shufti Pro Support\n URL: https://shuftipro.com/contact-us/",
+      "type": "text/plain"
+    }
+  }
+}

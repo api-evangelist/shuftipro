@@ -1,0 +1,66 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Shufti Pro
+providerId: shuftipro
+created: '2026-06-25'
+modified: '2026-06-25'
+reconciled: false
+tags:
+- Identity Verification
+- KYC
+- KYB
+- AML
+- Compliance
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Shufti Pro applies per-account controls on its verification API, including
+  request throttling and per-request timeouts (an offsite onsite link
+  defaults to a 60-minute time limit, surfaced as request.timeout). Incorrect
+  or missing credentials return request.unauthorized. Specific numeric
+  request-per-minute and concurrency limits are governed by the customer
+  contract and are not publicly published, so they are not reconciled here.
+notes: >-
+  Confirm per-account request limits, concurrency, and timeout windows with
+  Shufti Pro during reconciliation; these are contract- and plan-dependent.
+sources:
+- https://developers.shuftipro.com/docs/verification_endpoints/requests/
+- https://developers.shuftipro.com/docs/verification_endpoints/responses/
+- https://shuftipro.com/help-center/response-events/
+responseCodes:
+  unauthorized: request.unauthorized
+  timeout: request.timeout
+  invalid: request.invalid
+limits:
+- name: Requests Per Account
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: Per-account request throttling governed by contract; not publicly published.
+- name: Verification Timeout
+  scope: request
+  metric: minutes
+  limit: '60'
+  notes: >-
+    Default time limit for completing an onsite verification; exceeding it
+    returns request.timeout.
+- name: Concurrent Verifications
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: Concurrency governed by plan/contract; not publicly published.
+policies:
+- name: Authentication Enforcement
+  description: >-
+    Invalid or missing Basic Auth credentials or expired Bearer tokens
+    return request.unauthorized. Bearer tokens are valid for 10 minutes
+    and single use.
+- name: Asynchronous Processing
+  description: >-
+    Offsite requests with show_results "0" return request.pending and final
+    results arrive via the callback_url, smoothing client-side throughput.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

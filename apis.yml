@@ -1,0 +1,145 @@
+aid: shuftipro
+url: https://raw.githubusercontent.com/api-evangelist/shuftipro/refs/heads/main/apis.yml
+name: Shufti Pro
+kind: company
+description: Shufti Pro is a global identity-verification provider offering KYC, KYB,
+  and AML compliance through a single REST API. The Shufti Pro API runs document,
+  facial biometric, address, consent, and AML/background-check verifications across
+  240+ countries and territories, with asynchronous callbacks, status retrieval, and
+  data deletion.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Identity Verification
+- KYC
+- KYB
+- AML
+- Compliance
+created: '2026-06-25'
+modified: '2026-06-25'
+specificationVersion: '0.19'
+apis:
+- aid: shuftipro:shuftipro-verification-api
+  name: Shufti Pro Verification API
+  tags:
+  - Verification
+  - Document
+  - Face
+  - Address
+  - Consent
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.shuftipro.com/docs/verification_endpoints/requests/
+  baseURL: https://api.shuftipro.com
+  properties:
+  - url: https://developers.shuftipro.com/docs/verification_endpoints/requests/
+    type: Documentation
+  - url: https://developers.shuftipro.com/docs/verification_endpoints/responses/
+    type: APIReference
+  - url: openapi/shuftipro-openapi.yml
+    type: OpenAPI
+  - url: collections/shuftipro.postman_collection.json
+    type: PostmanCollection
+  - url: collections/shuftipro.opencollection.json
+    type: OpenCollection
+  description: Submits a verification request to api.shuftipro.com with one or more
+    service objects - document, face, address, and consent - to run KYC identity
+    verification across 10,000+ document types in 230+ countries.
+- aid: shuftipro:shuftipro-kyb-api
+  name: Shufti Pro KYB API
+  tags:
+  - KYB
+  - Business Verification
+  - Registry
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://shuftipro.com/business-verification/
+  baseURL: https://api.shuftipro.com
+  properties:
+  - url: https://shuftipro.com/business-verification/
+    type: Documentation
+  - url: openapi/shuftipro-openapi.yml
+    type: OpenAPI
+  - url: collections/shuftipro.postman_collection.json
+    type: PostmanCollection
+  - url: collections/shuftipro.opencollection.json
+    type: OpenCollection
+  description: Know Your Business verification that fetches company registry records
+    and corporate data, validates business existence, and resolves ultimate
+    beneficial owners via the kyb service object on the verification endpoint.
+- aid: shuftipro:shuftipro-aml-background-checks-api
+  name: Shufti Pro AML & Background Checks API
+  tags:
+  - AML
+  - Background Checks
+  - Watchlists
+  - Screening
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.shuftipro.com/docs/verification_endpoints/requests/
+  baseURL: https://api.shuftipro.com
+  properties:
+  - url: https://developers.shuftipro.com/docs/verification_endpoints/requests/
+    type: Documentation
+  - url: openapi/shuftipro-openapi.yml
+    type: OpenAPI
+  - url: collections/shuftipro.postman_collection.json
+    type: PostmanCollection
+  - url: collections/shuftipro.opencollection.json
+    type: OpenCollection
+  description: Screens an end-user's full name and date of birth against 1700+ global
+    AML watchlists, sanctions, and PEP lists via the background_checks service
+    object for ongoing compliance monitoring.
+- aid: shuftipro:shuftipro-status-api
+  name: Shufti Pro Status API
+  tags:
+  - Status
+  - Proofs
+  - Polling
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.shuftipro.com/docs/verification_endpoints/responses/
+  baseURL: https://api.shuftipro.com
+  properties:
+  - url: https://developers.shuftipro.com/docs/verification_endpoints/responses/
+    type: Documentation
+  - url: openapi/shuftipro-openapi.yml
+    type: OpenAPI
+  - url: collections/shuftipro.postman_collection.json
+    type: PostmanCollection
+  - url: collections/shuftipro.opencollection.json
+    type: OpenCollection
+  description: Retrieves the current status, event, and proof URLs for a previously
+    submitted verification by posting its reference to the /status endpoint, and
+    deletes verification data via the /delete endpoint.
+- aid: shuftipro:shuftipro-webhooks-api
+  name: Shufti Pro Webhooks API
+  tags:
+  - Webhooks
+  - Callbacks
+  - Notifications
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.shuftipro.com/docs/verification_methods/offsite
+  baseURL: https://api.shuftipro.com
+  properties:
+  - url: https://developers.shuftipro.com/docs/verification_methods/offsite
+    type: Documentation
+  - url: openapi/shuftipro-openapi.yml
+    type: OpenAPI
+  description: Server-to-server callbacks posted to a client-registered callback_url
+    carrying verification events (verification.accepted, verification.declined,
+    request.pending, request.deleted) with extracted data and a SHA256 response
+    signature for validation.
+common:
+- type: GitHubOrganization
+  url: https://github.com/shuftipro
+- type: LinkedIn
+  url: https://www.linkedin.com/company/shufti-pro
+- type: Website
+  url: https://shuftipro.com
+- type: Documentation
+  url: https://developers.shuftipro.com
+- type: Plans
+  url: plans/shuftipro-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/shuftipro-rate-limits.yml
+- type: FinOps
+  url: finops/shuftipro-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

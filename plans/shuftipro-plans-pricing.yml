@@ -1,0 +1,140 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Shufti Pro
+providerId: shuftipro
+created: '2026-06-25'
+modified: '2026-06-25'
+reconciled: false
+tags:
+- Identity Verification
+- KYC
+- KYB
+- AML
+- Compliance
+- Plans
+description: >-
+  Shufti Pro prices identity verification on a sales-led, per-verification
+  basis. Pricing is quoted per service (document, face, address, consent,
+  AML/background checks, KYB) and varies by region, volume, and contract.
+  Shufti publishes no public self-serve price list; prospective customers
+  request a quote or start a free trial and negotiate volume rates with
+  sales. Specific per-verification rates are not reconciled in this artifact.
+notes: >-
+  Per-verification and per-service rates are not publicly published; contact
+  Shufti Pro sales for a quote. Verify pricing and any free-trial credits
+  during reconciliation.
+sources:
+- https://shuftipro.com/pricing/
+- https://shuftipro.com/contact-us/
+- https://developers.shuftipro.com
+plans:
+- id: shuftipro-free-trial
+  name: Free Trial
+  type: free
+  description: >-
+    Time- or volume-limited trial access to evaluate the verification API
+    and back office before signing a contract.
+  entries:
+  - label: Trial Verifications
+    name: trial_verifications
+    type: free
+    metric: verifications
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free trial
+    userMultiplied: false
+  elements:
+  - name: Document Verification
+  - name: Face Verification
+  - name: Address Verification
+- id: shuftipro-pay-per-verification
+  name: Pay-Per-Verification
+  type: usage
+  description: >-
+    Per-verification pricing quoted by service and region under a sales
+    contract. Each service object billed per successful verification.
+  entries:
+  - label: Document Verification
+    name: document_verification
+    type: usage
+    metric: verifications
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: contact sales (per verification)
+    userMultiplied: false
+  - label: Face / Biometric Verification
+    name: face_verification
+    type: usage
+    metric: verifications
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: contact sales (per verification)
+    userMultiplied: false
+  - label: Address Verification
+    name: address_verification
+    type: usage
+    metric: verifications
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: contact sales (per verification)
+    userMultiplied: false
+  - label: AML / Background Checks
+    name: aml_background_checks
+    type: usage
+    metric: screenings
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: contact sales (per screening)
+    userMultiplied: false
+  - label: KYB / Business Verification
+    name: kyb_verification
+    type: usage
+    metric: verifications
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: contact sales (per verification)
+    userMultiplied: false
+  elements:
+  - name: Document
+  - name: Face
+  - name: Address
+  - name: Consent
+  - name: Background Checks
+  - name: KYB
+- id: shuftipro-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Volume commitments, custom service bundles, ongoing AML monitoring,
+    dedicated support, and negotiated terms. Contact Shufti Pro sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Ongoing AML Monitoring
+  - name: Dedicated Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
