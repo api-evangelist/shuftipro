@@ -1,0 +1,20 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/shuftipro-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: HTTP Basic Auth using your Client ID as the username and your Secret Key as the
+    password.
+  sources:
+  - openapi/shuftipro-openapi.yml
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Bearer access token shared with the client; valid for 10 minutes and single use.
+  sources:
+  - openapi/shuftipro-openapi.yml

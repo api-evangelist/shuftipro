@@ -126,6 +126,10 @@ apis:
     request.pending, request.deleted) with extracted data and a SHA256 response
     signature for validation.
 common:
+- type: DomainSecurity
+  url: security/shuftipro-domain-security.yml
+- type: Authentication
+  url: authentication/shuftipro-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/shuftipro
 - type: LinkedIn
@@ -140,6 +144,8 @@ common:
   url: rate-limits/shuftipro-rate-limits.yml
 - type: FinOps
   url: finops/shuftipro-finops.yml
+- url: https://shuftipro.com/blog/
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
