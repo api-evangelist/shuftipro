@@ -1,0 +1,14 @@
+{
+  "repo": "shuftipro",
+  "feeds": [
+    {
+      "source": "https://shuftipro.com/blog/",
+      "feed_url": "https://shuftipro.com/blog/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    }
+  ],
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 10
+}
