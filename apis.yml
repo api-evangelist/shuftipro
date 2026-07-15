@@ -126,6 +126,8 @@ apis:
     request.pending, request.deleted) with extracted data and a SHA256 response
     signature for validation.
 common:
+- type: AgenticAccess
+  url: agentic-access/shuftipro-agentic-access.yml
 - type: DomainSecurity
   url: security/shuftipro-domain-security.yml
 - type: Authentication
