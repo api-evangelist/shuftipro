@@ -1,0 +1,282 @@
+openapi: 3.0.1
+info:
+  title: Shufti Pro Status Verification API
+  description: Specification of the Shufti Pro identity-verification API. A single REST endpoint accepts a verification request containing one or more service objects - document, face, address, consent, background_checks, and kyb - to run KYC, KYB, and AML compliance across 240+ countries and territories. Companion endpoints retrieve verification status and proofs and delete verification data. Requests authorize via HTTP Basic Auth (Client ID as username, Secret Key as password) or a short-lived Bearer access token.
+  termsOfService: https://shuftipro.com/terms-conditions/
+  contact:
+    name: Shufti Pro Support
+    url: https://shuftipro.com/contact-us/
+  version: '1.0'
+servers:
+- url: https://api.shuftipro.com
+tags:
+- name: Verification
+paths:
+  /:
+    post:
+      operationId: createVerification
+      tags:
+      - Verification
+      summary: Create a verification request.
+      description: Submits a verification request containing a unique reference, an optional callback_url, and one or more service objects (document, face, address, consent, background_checks, kyb). In offsite mode with show_results set to "0" the request returns request.pending and final results are delivered asynchronously to the callback_url.
+      security:
+      - basicAuth: []
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerificationRequest'
+      responses:
+        '200':
+          description: Verification response.
+          headers:
+            Signature:
+              schema:
+                type: string
+              description: SHA256 signature of the response body for validation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerificationResponse'
+        '401':
+          description: Unauthorised - invalid credentials.
+components:
+  schemas:
+    BackgroundChecksService:
+      type: object
+      description: AML background check screening against 1700+ global watchlists, sanctions, and PEP lists.
+      properties:
+        name:
+          $ref: '#/components/schemas/NameObject'
+        dob:
+          type: string
+          format: date
+          description: End-user date of birth.
+        alias_search:
+          type: string
+          enum:
+          - '0'
+          - '1'
+        filters:
+          type: array
+          items:
+            type: string
+            enum:
+            - sanction
+            - warning
+            - fitness-probity
+            - pep
+            - pep-class-1
+            - pep-class-2
+            - adverse-media
+    ConsentService:
+      type: object
+      description: Handwritten or printed consent verification.
+      properties:
+        proof:
+          type: string
+          description: Base64-encoded consent image.
+        text:
+          type: array
+          items:
+            type: string
+          description: The consent text the user must reproduce.
+        supported_types:
+          type: array
+          items:
+            type: string
+            enum:
+            - handwritten
+            - printed
+    VerificationResponse:
+      type: object
+      properties:
+        reference:
+          type: string
+          example: '17374217'
+        event:
+          type: string
+          description: Current verification event.
+          enum:
+          - request.received
+          - request.pending
+          - request.invalid
+          - request.timeout
+          - request.unauthorized
+          - request.deleted
+          - verification.accepted
+          - verification.declined
+          - verification.cancelled
+          - verification.status.changed
+        email:
+          type: string
+        country:
+          type: string
+        verification_url:
+          type: string
+          format: uri
+          description: Onsite verification URL, when applicable.
+        verification_result:
+          type: object
+          additionalProperties: true
+          description: Per-service pass/fail result map.
+        verification_data:
+          type: object
+          additionalProperties: true
+          description: Extracted data per service.
+        declined_reason:
+          type: string
+        declined_codes:
+          type: array
+          items:
+            type: string
+    KybService:
+      type: object
+      description: Know Your Business verification against company registries and corporate records.
+      properties:
+        company_name:
+          type: string
+        company_jurisdiction_code:
+          type: string
+          description: Registry jurisdiction code, e.g. us_de.
+        company_registration_number:
+          type: string
+    FaceService:
+      type: object
+      description: Facial biometric verification and liveness.
+      properties:
+        proof:
+          type: string
+          description: Base64-encoded face image (omit to capture onsite).
+    VerificationRequest:
+      type: object
+      required:
+      - reference
+      properties:
+        reference:
+          type: string
+          description: Unique identifier for the verification request.
+          example: '17374217'
+        callback_url:
+          type: string
+          format: uri
+          description: Server endpoint to receive asynchronous notifications.
+        email:
+          type: string
+          format: email
+          description: End-user email address.
+        country:
+          type: string
+          description: ISO 3166-1 alpha-2 country code of the end-user.
+          example: US
+        language:
+          type: string
+          description: Language for the verification flow.
+        verification_mode:
+          type: string
+          enum:
+          - image_only
+          - video_only
+          - any
+          description: Capture mode for the verification.
+        show_results:
+          type: string
+          enum:
+          - '0'
+          - '1'
+          description: Set to "0" for asynchronous (offsite) responses.
+        allow_retry:
+          type: string
+          enum:
+          - '0'
+          - '1'
+          description: Set to "1" to allow real-time document re-upload.
+        ttl:
+          type: integer
+          description: Time-to-live, in minutes, for an onsite verification link.
+        document:
+          $ref: '#/components/schemas/DocumentService'
+        face:
+          $ref: '#/components/schemas/FaceService'
+        address:
+          $ref: '#/components/schemas/AddressService'
+        consent:
+          $ref: '#/components/schemas/ConsentService'
+        background_checks:
+          $ref: '#/components/schemas/BackgroundChecksService'
+        kyb:
+          $ref: '#/components/schemas/KybService'
+    AddressService:
+      type: object
+      description: Address verification across 240+ territories.
+      properties:
+        proof:
+          type: string
+          description: Base64-encoded address proof document.
+        full_address:
+          type: string
+        name:
+          $ref: '#/components/schemas/NameObject'
+        supported_types:
+          type: array
+          items:
+            type: string
+            enum:
+            - id_card
+            - utility_bill
+            - bank_statement
+    DocumentService:
+      type: object
+      description: Document verification supporting 10,000+ document types across 230+ countries.
+      properties:
+        proof:
+          type: string
+          description: Base64-encoded document image (omit to capture onsite).
+        supported_types:
+          type: array
+          items:
+            type: string
+            enum:
+            - id_card
+            - passport
+            - driving_license
+            - credit_or_debit_card
+        name:
+          $ref: '#/components/schemas/NameObject'
+        dob:
+          type: string
+          format: date
+          description: Expected date of birth on the document.
+        document_number:
+          type: string
+        issue_date:
+          type: string
+          format: date
+        expiry_date:
+          type: string
+          format: date
+    NameObject:
+      type: object
+      properties:
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        fuzzy_match:
+          type: string
+          enum:
+          - '0'
+          - '1'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using your Client ID as the username and your Secret Key as the password.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer access token shared with the client; valid for 10 minutes and single use.
